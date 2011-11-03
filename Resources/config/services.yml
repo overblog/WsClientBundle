@@ -1,7 +1,8 @@
 parameters:
-#    overblog_rest_client.example.class: Overblog\RestClientBundle\Example
+  rest_client.class: Overblog\RestClientBundle\Lib\RestClient
+  urls: %rest_client.urls%
 
 services:
-#    overblog_rest_client.example:
-#        class: %overblog_rest_client.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+  rest_client:
+    class: %rest_client.class%
+    arguments: [%urls%]
