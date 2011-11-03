@@ -1,6 +1,9 @@
 <?php
 namespace Overblog\RestClientBundle\Lib;
 
+use Overblog\RestClientBundle\Exception\ConfigurationException;
+use Overblog\RestClientBundle\Exception\QueryException;
+
 class RestClient
 {
     /**
@@ -58,7 +61,7 @@ class RestClient
     {
         if(!isset($this->urls[$name]))
         {
-            throw new \Exception('Unable to find configuration "' . $name . '"');
+            throw new ConfigurationException('Unable to find configuration "' . $name . '"');
         }
         else
         {
@@ -89,7 +92,7 @@ class RestClient
      */
 	public function post($uri, Array $param = array())
 	{
-        $this->handler[$this->active_connection][] = $this->createRequest(CURLOPT_HTTPPOST, $uri, $param);
+        $this->handler[$this->active_connection][] = $this->createRequest(CURLOPT_POST, $uri, $param);
 
         return $this;
 	}
@@ -102,7 +105,7 @@ class RestClient
      */
 	public function put($uri, Array $param = array())
 	{
-        $this->handler[$this->active_connection][] = $this->createRequest(CURLOPT_HTTPPUT, $uri, $param);
+        $this->handler[$this->active_connection][] = $this->createRequest(CURLOPT_PUT, $uri, $param);
 
         return $this;
 	}
@@ -152,7 +155,7 @@ class RestClient
     {
         if (is_null($this->active_connection))
         {
-            throw new \Exception('No connection set.');
+            throw new ConfigurationException('No connection set.');
         }
 
         $ch = curl_init();
@@ -190,7 +193,7 @@ class RestClient
 
         if(false === $return)
         {
-            throw new \Exception('Curl Error : ' . curl_error($ch));
+            throw new QueryException('Curl Error : ' . curl_error($ch));
         }
 
         list($headers, $body) = explode("\r\n\r\n", $return, 2);
@@ -244,9 +247,9 @@ class RestClient
 
                 $return = curl_multi_getcontent($ch);
 
-                if(false === $return)
+                if(null === $return)
                 {
-                    throw new \Exception('Curl Error : ' . curl_error($ch));
+                    throw new QueryException('Curl Error : ' . curl_error($ch));
                 }
 
                 list($headers, $body) = explode("\r\n\r\n", $return, 2);
