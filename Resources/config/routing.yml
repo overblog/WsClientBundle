@@ -1,0 +1,3 @@
+OverblogRestClientBundle_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: OverblogRestClientBundle:Default:index }
