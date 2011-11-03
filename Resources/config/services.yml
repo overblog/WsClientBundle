@@ -5,4 +5,13 @@ parameters:
 services:
   rest_client:
     class: %rest_client.class%
-    arguments: [%urls%]
+    arguments: [%urls%, @rest_client.logger]
+
+  rest_client.logger:
+    class: Overblog\RestClientBundle\Logging\RestClientLogger
+
+  rest_client.orms:
+    class: Overblog\RestClientBundle\DataCollector\RestClientDataCollector
+    arguments: [@rest_client.logger]
+    tags:
+        - { name: data_collector, template: "OverblogRestClientBundle:Collector:rest", id: "rest_client" }

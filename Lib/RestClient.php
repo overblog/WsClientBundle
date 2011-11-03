@@ -43,12 +43,20 @@ class RestClient
     protected $cURL_multi_handler;
 
     /**
+     * Logger instance
+     * @var Overblog\RestClientBundle\Logging\RestClientLogger
+     */
+    protected $logger;
+
+    /**
      * Constructor - Save dependecies
      * @param array $urls
+     * @param Object $logger
      */
-    public function __construct(Array $urls)
+    public function __construct(Array $urls, $logger = null)
     {
         $this->urls = $urls;
+        $this->logger = $logger;
     }
 
     /**
@@ -201,6 +209,11 @@ class RestClient
         $this->setLastHeaders($name, $headers);
         $this->setLastStats($name, curl_getinfo($ch));
 
+        if($this->logger)
+        {
+            $this->logger->logQuery('Get' . ' (Multi)', array(), $name, $this->getLastStats($name));
+        }
+
         $body = $this->decodeBody($body);
 
         curl_close($ch);
@@ -256,6 +269,11 @@ class RestClient
 
                 $this->setLastHeaders($cle, $headers);
                 $this->setLastStats($cle, curl_getinfo($ch));
+
+                if($this->logger)
+                {
+                    $this->logger->logQuery('Get' . ' (Multi)', array(), $cle, $this->getLastStats($cle));
+                }
 
                 $bodies[$cle] = $this->decodeBody($body);
 
