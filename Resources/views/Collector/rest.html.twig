@@ -37,7 +37,9 @@
                     </div>
                     <small>
                         <strong>Method</strong>: {{ query.method }}<br />
+                    {% if query.param %}
                         <strong>Parameters</strong>: {{ query.param|yaml_encode }}<br />
+                    {% endif %}
                         <strong>Stats</strong>: {{ query.stats|yaml_encode }}<br />
                         <strong>Time</strong>: {{ '%0.2f'|format(query.stats.total_time * 1000) }} ms
                     </small>

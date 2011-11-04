@@ -7,6 +7,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Overblog\RestClientBundle\Logging\RestClientLogger;
 
+
+/**
+ * REST Collector
+ *
+ * @author Xavier HAUSHERR
+ */
+
 class RestClientDataCollector extends DataCollector
 {
     protected $logger;

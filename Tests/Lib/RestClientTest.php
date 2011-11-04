@@ -7,6 +7,7 @@
 namespace Overblog\RestClientBundle\Test\Lib;
 
 use Overblog\RestClientBundle\Lib\RestClient;
+use Overblog\RestClientBundle\Lib\RestQuery;
 use Overblog\RestClientBundle\Logging\RestClientLogger;
 use Symfony\Bridge\Monolog\Logger;
 
@@ -124,5 +125,14 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
 
         $e = new \Overblog\RestClientBundle\Exception\ConfigurationException('TEST');
         $this->assertEquals('TEST', $e);
+    }
+
+    public function testUnknowMethod()
+    {
+        $this->setExpectedException('Overblog\RestClientBundle\Exception\ConfigurationException',
+			"Unknow method"
+		);
+
+        $ch = new RestQuery('XXX', 'http://');
     }
 }

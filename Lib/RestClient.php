@@ -1,17 +1,18 @@
 <?php
 namespace Overblog\RestClientBundle\Lib;
 
+use Overblog\RestClientBundle\Lib\RestQuery;
 use Overblog\RestClientBundle\Exception\ConfigurationException;
 use Overblog\RestClientBundle\Exception\QueryException;
 
+/**
+ * REST request abastraction Layer
+ *
+ * @author Xavier HAUSHERR
+ */
+
 class RestClient
 {
-    /**
-     * Timeout for Web Service call
-     * @var int
-     */
-    const TIMEOUT = 1000;
-
     /**
      * Handler for curl call
      * @var array
@@ -87,7 +88,7 @@ class RestClient
      */
 	public function get($uri, Array $param = array())
 	{
-        $this->handler[$this->active_connection][] = $this->createRequest(CURLOPT_HTTPGET, $uri, $param);
+        $this->handler[$this->active_connection][] = $this->createRequest('GET', $uri, $param);
 
         return $this;
 	}
@@ -100,7 +101,7 @@ class RestClient
      */
 	public function post($uri, Array $param = array())
 	{
-        $this->handler[$this->active_connection][] = $this->createRequest(CURLOPT_POST, $uri, $param);
+        $this->handler[$this->active_connection][] = $this->createRequest('POST', $uri, $param);
 
         return $this;
 	}
@@ -113,7 +114,7 @@ class RestClient
      */
 	public function put($uri, Array $param = array())
 	{
-        $this->handler[$this->active_connection][] = $this->createRequest(CURLOPT_PUT, $uri, $param);
+        $this->handler[$this->active_connection][] = $this->createRequest('PUT', $uri, $param);
 
         return $this;
 	}
@@ -166,57 +167,40 @@ class RestClient
             throw new ConfigurationException('No connection set.');
         }
 
-        $ch = curl_init();
-
-        // Options
         $url = preg_replace('#([^:])//#', '$1/', $this->urls[$this->active_connection] . $uri);
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $param);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT_MS, self::TIMEOUT);
-        curl_setopt($ch, CURLOPT_HEADER, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_USERAGENT, 'OverBlog Rest Client');
 
-        if ('DELETE' === $method)
-        {
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
-        } else
-        {
-            curl_setopt($ch, $method, true);
-        }
-
-        return $ch;
+        return new RestQuery($method, $url, $param);
     }
 
     /**
      * Execute single request
-     * @param cURL $ch
+     * @param RestQuery $ch
      * @param string $name
      * @return array
      */
-    protected function executeSingleRequest($ch, $name)
+    protected function executeSingleRequest(RestQuery $ch, $name)
     {
         //Exec
-        $return = curl_exec($ch);
+        $return = $ch->exec();
 
         if(false === $return)
         {
-            throw new QueryException('Curl Error : ' . curl_error($ch));
+            throw new QueryException('Curl Error : ' . curl_error($ch->getHandle()));
         }
 
         list($headers, $body) = explode("\r\n\r\n", $return, 2);
 
         $this->setLastHeaders($name, $headers);
-        $this->setLastStats($name, curl_getinfo($ch));
+        $this->setLastStats($name, $ch->getInfo());
 
         if($this->logger)
         {
-            $this->logger->logQuery('Get' . ' (Multi)', array(), $name, $this->getLastStats($name));
+            $this->logger->logQuery($ch->getMethod() . ' (Multi)', $ch->getParam(), $name, $this->getLastStats($name));
         }
 
         $body = $this->decodeBody($body);
 
-        curl_close($ch);
+        $ch->close();
 
         $this->active_connection = null;
 
@@ -236,7 +220,7 @@ class RestClient
         {
             foreach($handler as $ch)
             {
-                curl_multi_add_handle($mh, $ch);
+                curl_multi_add_handle($mh, $ch->getHandle());
             }
         }
 
@@ -258,26 +242,26 @@ class RestClient
             {
                 $cle = $name . '_' . $key;
 
-                $return = curl_multi_getcontent($ch);
+                $return = curl_multi_getcontent($ch->getHandle());
 
                 if(null === $return)
                 {
-                    throw new QueryException('Curl Error : ' . curl_error($ch));
+                    throw new QueryException('Curl Error : ' . $ch->getError());
                 }
 
                 list($headers, $body) = explode("\r\n\r\n", $return, 2);
 
                 $this->setLastHeaders($cle, $headers);
-                $this->setLastStats($cle, curl_getinfo($ch));
+                $this->setLastStats($cle, $ch->getInfo());
 
                 if($this->logger)
                 {
-                    $this->logger->logQuery('Get' . ' (Multi)', array(), $cle, $this->getLastStats($cle));
+                    $this->logger->logQuery($ch->getMethod() . ' (Multi)', $ch->getParam(), $cle, $this->getLastStats($cle));
                 }
 
                 $bodies[$cle] = $this->decodeBody($body);
 
-                curl_multi_remove_handle($mh, $ch);
+                curl_multi_remove_handle($mh, $ch->getHandle());
             }
         }
 
