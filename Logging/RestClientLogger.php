@@ -2,18 +2,15 @@
 
 namespace Overblog\RestClientBundle\Logging;
 
-use Symfony\Component\HttpKernel\Log\LoggerInterface;
+use Overblog\CommonBundle\Logging\RestLogger;
 
-class RestClientLogger
+class RestClientLogger implements RestLogger
 {
     /** @var array $queries Executed REST queries. */
     public $queries = array();
 
-    /** @var boolean $enabled If Debug Stack is enabled (log queries) or not. */
-    public $enabled = true;
-
-    public function logQuery($method, $params, $key, $stats)
+    public function logQuery($queryId, $method, Array $params, Array $stats)
     {
-        $this->queries[$key] = array('method' => $method, 'param' => $params, 'stats' => $stats);
+        $this->queries[$queryId] = array('method' => $method, 'param' => $params, 'stats' => $stats);
     }
 }

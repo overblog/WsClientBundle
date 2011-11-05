@@ -30,13 +30,14 @@
         </p>
     {% else %}
         <ul class="alt">
-            {% for i, query in collector.queries %}
-                <li class="{{ i is odd ? 'odd' : 'even' }}">
+            {% for id, query in collector.queries %}
+                <li class="{{loop.index % 2 ? 'even' : 'odd' }}">
                     <div>
                         <code>{{ query.stats.url }}</code>
                     </div>
                     <small>
                         <strong>Method</strong>: {{ query.method }}<br />
+                        <strong>Key</strong>: {{ id }}<br />
                     {% if query.param %}
                         <strong>Parameters</strong>: {{ query.param|yaml_encode }}<br />
                     {% endif %}

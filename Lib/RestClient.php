@@ -4,6 +4,7 @@ namespace Overblog\RestClientBundle\Lib;
 use Overblog\RestClientBundle\Lib\RestQuery;
 use Overblog\RestClientBundle\Exception\ConfigurationException;
 use Overblog\RestClientBundle\Exception\QueryException;
+use Overblog\CommonBundle\Logging\RestLogger;
 
 /**
  * REST request abastraction Layer
@@ -52,9 +53,9 @@ class RestClient
     /**
      * Constructor - Save dependecies
      * @param array $urls
-     * @param Object $logger
+     * @param RestLogger $logger
      */
-    public function __construct(Array $urls, $logger = null)
+    public function __construct(Array $urls, RestLogger $logger = null)
     {
         $this->urls = $urls;
         $this->logger = $logger;
@@ -195,7 +196,7 @@ class RestClient
 
         if($this->logger)
         {
-            $this->logger->logQuery($ch->getMethod(), $ch->getParam(), $name, $this->getLastStats($name));
+            $this->logger->logQuery($name, $ch->getMethod(), $ch->getParam(), $this->getLastStats($name));
         }
 
         $body = $this->decodeBody($body);
@@ -256,7 +257,7 @@ class RestClient
 
                 if($this->logger)
                 {
-                    $this->logger->logQuery($ch->getMethod() . ' (Multi)', $ch->getParam(), $cle, $this->getLastStats($cle));
+                    $this->logger->logQuery($cle, $ch->getMethod() . ' (Multi)', $ch->getParam(), $this->getLastStats($cle));
                 }
 
                 $bodies[$cle] = $this->decodeBody($body);
