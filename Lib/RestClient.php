@@ -4,7 +4,7 @@ namespace Overblog\RestClientBundle\Lib;
 use Overblog\RestClientBundle\Lib\RestQuery;
 use Overblog\RestClientBundle\Exception\ConfigurationException;
 use Overblog\RestClientBundle\Exception\QueryException;
-use Overblog\CommonBundle\Logging\RestLogger;
+use Overblog\CommonBundle\Interfaces\RestLogger;
 
 /**
  * REST request abastraction Layer

@@ -2,7 +2,7 @@
 
 namespace Overblog\RestClientBundle\Logging;
 
-use Overblog\CommonBundle\Logging\RestLogger;
+use Overblog\CommonBundle\Interfaces\RestLogger;
 
 class RestClientLogger implements RestLogger
 {
