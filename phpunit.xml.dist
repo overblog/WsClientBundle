@@ -13,7 +13,7 @@
         <server name="SYMFONY" value="./Fixtures/symfony/src" />
     </php>
     <testsuites>
-        <testsuite name="MyBundle Test Suite">
+        <testsuite name="RestClientBundle Test Suite">
             <directory suffix="Test.php">./Tests</directory>
         </testsuite>
     </testsuites>
@@ -22,6 +22,7 @@
             <directory>./</directory>
             <exclude>
                 <directory>./Tests</directory>
+                <directory>./Fixtures</directory>
             </exclude>
         </whitelist>
     </filter>

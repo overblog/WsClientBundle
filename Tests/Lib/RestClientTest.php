@@ -9,6 +9,7 @@ namespace Overblog\RestClientBundle\Test\Lib;
 use Overblog\RestClientBundle\Lib\RestClient;
 use Overblog\RestClientBundle\Lib\RestQuery;
 use Overblog\RestClientBundle\Logging\RestClientLogger;
+use Symfony\Bridge\Monolog\Logger;
 
 class RestClientTest extends \PHPUnit_Framework_TestCase
 {
