@@ -9,7 +9,6 @@ namespace Overblog\RestClientBundle\Test\Lib;
 use Overblog\RestClientBundle\Lib\RestClient;
 use Overblog\RestClientBundle\Lib\RestQuery;
 use Overblog\RestClientBundle\Logging\RestClientLogger;
-use Symfony\Bridge\Monolog\Logger;
 
 class RestClientTest extends \PHPUnit_Framework_TestCase
 {
@@ -23,7 +22,7 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
     {
         $this->client = new RestClient(array(
             'tumblr' => 'http://api.tumblr.com/v2/'
-        ), new RestClientLogger(new Logger('rest_client')));
+        ));
     }
 
     public function testGetConnection()
