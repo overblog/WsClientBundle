@@ -4,7 +4,7 @@ namespace Overblog\RestClientBundle\Lib;
 use Overblog\RestClientBundle\Lib\RestQuery;
 use Overblog\RestClientBundle\Exception\ConfigurationException;
 use Overblog\RestClientBundle\Exception\QueryException;
-use Overblog\CommonBundle\Interfaces\RestLogger;
+use Overblog\RestClientBundle\Logging\RestLoggerInterface;
 
 /**
  * REST request abastraction Layer
@@ -53,9 +53,9 @@ class RestClient
     /**
      * Constructor - Save dependecies
      * @param array $urls
-     * @param RestLogger $logger
+     * @param RestLoggerInterface $logger
      */
-    public function __construct(Array $urls, RestLogger $logger = null)
+    public function __construct(Array $urls, RestLoggerInterface $logger = null)
     {
         $this->urls = $urls;
         $this->logger = $logger;

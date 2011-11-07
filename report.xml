@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites>
-  <testsuite name="MyBundle Test Suite" tests="2" assertions="5" failures="0" errors="0" time="0.007746">
-    <testsuite name="Overblog\RestClientBundle\Test\Lib\RestClientTest" file="/home/overblog/public_html/overblog.ng/user/vendor/bundles/Overblog/RestClientBundle/Tests/Lib/RestClientTest.php" namespace="Overblog\RestClientBundle\Test\Lib" fullPackage="Overblog.RestClientBundle.Test.Lib" tests="2" assertions="5" failures="0" errors="0" time="0.007746">
-      <testcase name="testGetConnection" class="Overblog\RestClientBundle\Test\Lib\RestClientTest" file="/home/overblog/public_html/overblog.ng/user/vendor/bundles/Overblog/RestClientBundle/Tests/Lib/RestClientTest.php" line="28" assertions="3" time="0.006536"/>
-      <testcase name="testGetError" class="Overblog\RestClientBundle\Test\Lib\RestClientTest" file="/home/overblog/public_html/overblog.ng/user/vendor/bundles/Overblog/RestClientBundle/Tests/Lib/RestClientTest.php" line="39" assertions="2" time="0.001210"/>
-    </testsuite>
-  </testsuite>
-</testsuites>
