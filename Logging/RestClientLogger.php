@@ -2,9 +2,7 @@
 
 namespace Overblog\RestClientBundle\Logging;
 
-use Overblog\CommonBundle\Interfaces\RestLogger;
-
-class RestClientLogger implements RestLogger
+class RestClientLogger implements RestLoggerInterface
 {
     /** @var array $queries Executed REST queries. */
     public $queries = array();
