@@ -258,7 +258,7 @@ class RestClient
 
         if($this->logger)
         {
-            $this->logger->logQuery($query->getMethod() . ($isMulti ? ' (Multi)' : ''), $query->getParam(), $id, $this->getLastStats($id));
+            $this->logger->logQuery($id, $query->getMethod() . ($isMulti ? ' (Multi)' : ''), $query->getParam(), $this->getLastStats($id));
         }
 
         return $this->decodeBody($body);
