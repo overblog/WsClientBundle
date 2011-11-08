@@ -10,7 +10,7 @@ services:
   rest_client.logger:
     class: Overblog\RestClientBundle\Logging\RestClientLogger
 
-  rest_client.orms:
+  data_collector.rest_client:
     class: Overblog\RestClientBundle\DataCollector\RestClientDataCollector
     arguments: [@rest_client.logger]
     tags:
