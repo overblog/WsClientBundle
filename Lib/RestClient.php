@@ -2,6 +2,7 @@
 namespace Overblog\RestClientBundle\Lib;
 
 use Overblog\RestClientBundle\Lib\RestQuery;
+use Overblog\RestClientBundle\Manager\RestMultiQueryManager;
 use Overblog\RestClientBundle\Exception\ConfigurationException;
 use Overblog\RestClientBundle\Exception\QueryException;
 
@@ -142,9 +143,9 @@ class RestClient
         if(2 === count($this->handler, true))
         {
             $name = key($this->handler) . '_' . key(current($this->handler));
-            $ch = current($this->handler);
+            $query = current($this->handler);
 
-            return $this->executeSingleRequest($ch[0], $name);
+            return $this->executeSingleRequest($query[0], $name);
         }
         else
         {
@@ -174,37 +175,19 @@ class RestClient
 
     /**
      * Execute single request
-     * @param RestQuery $ch
+     * @param RestQuery $query
      * @param string $name
      * @return array
      */
-    protected function executeSingleRequest(RestQuery $ch, $name)
+    protected function executeSingleRequest(RestQuery $query, $id)
     {
-        //Exec
-        $return = $ch->exec();
+        $body = $this->execQuery($query, $id);
 
-        if(false === $return)
-        {
-            throw new QueryException('Curl Error : ' . curl_error($ch->getHandle()));
-        }
-
-        list($headers, $body) = explode("\r\n\r\n", $return, 2);
-
-        $this->setLastHeaders($name, $headers);
-        $this->setLastStats($name, $ch->getInfo());
-
-        if($this->logger)
-        {
-            $this->logger->logQuery($ch->getMethod(), $ch->getParam(), $name, $this->getLastStats($name));
-        }
-
-        $body = $this->decodeBody($body);
-
-        $ch->close();
+        $query->close();
 
         $this->active_connection = null;
 
-        return array($name => $body);
+        return array($id => $body);
     }
 
     /**
@@ -213,61 +196,71 @@ class RestClient
      */
     protected function executeMultiRequest()
     {
-        $mh = curl_multi_init();
+        $manager = new RestMultiQueryManager();
 
         // Add Handler
         foreach($this->handler as $handler)
         {
-            foreach($handler as $ch)
+            foreach($handler as $query)
             {
-                curl_multi_add_handle($mh, $ch->getHandle());
+                $manager->addQuery($query);
             }
         }
 
         // Exec Request
-        $active = null;
-
         do
         {
-            $mrc = curl_multi_exec($mh, $active);
+            $manager->execQueries();
         }
-        while ($active > 0);
+        while ($manager->waitForExec());
 
         // Get Results
         $bodies = array();
 
         foreach($this->handler as $name => $handler)
         {
-            foreach($handler as $key => $ch)
+            foreach($handler as $key => $query)
             {
-                $cle = $name . '_' . $key;
+                $id = $name . '_' . $key;
 
-                $return = curl_multi_getcontent($ch->getHandle());
+                $bodies[$id] = $this->execQuery($query, $id, true);
 
-                if(null === $return)
-                {
-                    throw new QueryException('Curl Error : ' . $ch->getError());
-                }
-
-                list($headers, $body) = explode("\r\n\r\n", $return, 2);
-
-                $this->setLastHeaders($cle, $headers);
-                $this->setLastStats($cle, $ch->getInfo());
-
-                if($this->logger)
-                {
-                    $this->logger->logQuery($ch->getMethod() . ' (Multi)', $ch->getParam(), $cle, $this->getLastStats($cle));
-                }
-
-                $bodies[$cle] = $this->decodeBody($body);
-
-                curl_multi_remove_handle($mh, $ch->getHandle());
+                $manager->removeQuery($query);
             }
         }
 
-        curl_multi_close($mh);
+        $manager->close();
 
         return $bodies;
+    }
+
+    /**
+     * Exec the query
+     * @param RestQuery $query
+     * @param string $id
+     * @param boolean $isMulti
+     * @return string
+     */
+    protected function execQuery(RestQuery $query, $id, $isMulti = false)
+    {
+        $return = $query->exec();
+
+        if(null === $return || false === $return)
+        {
+            throw new QueryException('Curl Error : ' . $query->getError());
+        }
+
+        list($headers, $body) = explode("\r\n\r\n", $return, 2);
+
+        $this->setLastHeaders($id, $headers);
+        $this->setLastStats($id, $query->getInfo());
+
+        if($this->logger)
+        {
+            $this->logger->logQuery($query->getMethod() . ($isMulti ? ' (Multi)' : ''), $query->getParam(), $id, $this->getLastStats($id));
+        }
+
+        return $this->decodeBody($body);
     }
 
     /**

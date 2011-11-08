@@ -73,6 +73,12 @@ class RestQuery
     protected $param = array();
 
     /**
+     * Is the query is part of a multi-query
+     * @var boolean
+     */
+    protected $isMulti = false;
+
+    /**
      * Set var and init cURL instance
      *
      * @param type $method
@@ -89,6 +95,10 @@ class RestQuery
         return $this->init();
     }
 
+    /**
+     * Set HTTP Method
+     * @param string $method
+     */
     protected function setMethod($method)
     {
         $method = strtoupper($method);
@@ -146,7 +156,14 @@ class RestQuery
      */
     public function exec()
     {
-        return curl_exec($this->handle);
+        if($this->isMulti)
+        {
+            return curl_multi_getcontent($this->getHandle());
+        }
+        else
+        {
+            return curl_exec($this->handle);
+        }
     }
 
     /**
@@ -183,6 +200,22 @@ class RestQuery
     public function getParam()
     {
         return $this->param;
+    }
+
+    /**
+     * Set the query as a part of a multi query
+     */
+    public function setMulti()
+    {
+        $this->isMulti = true;
+    }
+
+    /**
+     * Set the query as a part of a single query
+     */
+    public function setSingle()
+    {
+        $this->isMulti = false;
     }
 
     /**
