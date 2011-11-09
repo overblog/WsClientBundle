@@ -2,7 +2,7 @@
 
 {% block toolbar %}
     {% set icon %}
-        <img width="28" height="28" alt="Rest Client" style="border-width: 0; vertical-align: middle; margin-right: 5px;" src="{{ asset('bundles/overblogwsclient/images/ws.png') }}"/>
+        <img width="28" height="28" alt="Ws Client" style="border-width: 0; vertical-align: middle; margin-right: 5px;" src="{{ asset('bundles/overblogwsclient/images/ws.png') }}"/>
     {% endset %}
     {% set text %}
         <span title="{{ '%0.2f'|format(collector.time * 1000) }} ms">{{ collector.querycount }}</span>
@@ -13,7 +13,7 @@
 {% block menu %}
 <span class="label">
     <span class="icon"><img src="{{ asset('bundles/webprofiler/images/profiler/db.png') }}" alt="" /></span>
-    <strong>Rest Client</strong>
+    <strong>Ws Client</strong>
     <span class="count">
         <span>{{ collector.querycount }}</span>
         <span>{{ '%0.0f'|format(collector.time * 1000) }} ms</span>

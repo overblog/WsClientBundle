@@ -2,7 +2,7 @@
 namespace Overblog\WsClientBundle\Logging;
 
 /**
- * RestLogger - Interface to log Rest queries
+ * WsLogger - Interface to log Ws queries
  * @author Xavier HAUSHERR
  */
 

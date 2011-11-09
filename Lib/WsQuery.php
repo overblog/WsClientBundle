@@ -128,7 +128,7 @@ class WsQuery
         curl_setopt($this->handle, CURLOPT_CONNECTTIMEOUT_MS, self::TIMEOUT);
         curl_setopt($this->handle, CURLOPT_HEADER, true);
         curl_setopt($this->handle, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($this->handle, CURLOPT_USERAGENT, 'OverBlog Rest Client');
+        curl_setopt($this->handle, CURLOPT_USERAGENT, 'OverBlog Ws Client');
 
         if (self::DELETE === $this->method)
         {
