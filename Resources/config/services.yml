@@ -1,5 +1,5 @@
 parameters:
-  ws_client.class: Overblog\WsClientBundle\Lib\WsClient
+  ws_client.class: Overblog\WsClientBundle\Client\WsClient
   urls: %ws_client.urls%
 
 services:

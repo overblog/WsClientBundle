@@ -1,6 +1,6 @@
 <?php
 
-namespace Overblog\WsClientBundle\Lib;
+namespace Overblog\WsClientBundle\Query;
 
 use Overblog\WsClientBundle\Exception\ConfigurationException;
 

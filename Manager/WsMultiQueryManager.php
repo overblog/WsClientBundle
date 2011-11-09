@@ -1,7 +1,7 @@
 <?php
 namespace Overblog\WsClientBundle\Manager;
 
-use Overblog\WsClientBundle\Lib\WsQuery;
+use Overblog\WsClientBundle\Query\WsQuery;
 
 /**
  * WS request multi query manager

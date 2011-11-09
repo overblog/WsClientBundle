@@ -1,7 +1,7 @@
 <?php
-namespace Overblog\WsClientBundle\Lib;
+namespace Overblog\WsClientBundle\Client;
 
-use Overblog\WsClientBundle\Lib\WsQuery;
+use Overblog\WsClientBundle\Query\WsQuery;
 use Overblog\WsClientBundle\Manager\WsMultiQueryManager;
 use Overblog\WsClientBundle\Exception\ConfigurationException;
 use Overblog\WsClientBundle\Exception\QueryException;
