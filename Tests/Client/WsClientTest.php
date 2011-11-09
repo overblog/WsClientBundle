@@ -4,7 +4,7 @@
  *
  * @author Xavier HAUSHERR
  */
-namespace Overblog\WsClientBundle\Test\Lib;
+namespace Overblog\WsClientBundle\Test\Client;
 
 use Overblog\WsClientBundle\Client\WsClient;
 use Overblog\WsClientBundle\Query\WsQueryRest;
