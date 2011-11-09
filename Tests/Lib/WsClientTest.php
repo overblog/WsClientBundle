@@ -6,8 +6,8 @@
  */
 namespace Overblog\WsClientBundle\Test\Lib;
 
-use Overblog\WsClientBundle\Lib\WsClient;
-use Overblog\WsClientBundle\Lib\WsQuery;
+use Overblog\WsClientBundle\Client\WsClient;
+use Overblog\WsClientBundle\Query\WsQuery;
 use Overblog\WsClientBundle\Logging\WsClientLogger;
 use Symfony\Bridge\Monolog\Logger;
 
@@ -28,7 +28,7 @@ class WsClientTest extends \PHPUnit_Framework_TestCase
 
     public function testGetConnection()
     {
-        $this->assertInstanceOf('Overblog\WsClientBundle\Lib\WsClient', $this->client->getConnection('tumblr'));
+        $this->assertInstanceOf('Overblog\WsClientBundle\Client\WsClient', $this->client->getConnection('tumblr'));
 
         $this->setExpectedException('Overblog\WsClientBundle\Exception\ConfigurationException',
 			'Unable to find configuration "NexistePas"'
