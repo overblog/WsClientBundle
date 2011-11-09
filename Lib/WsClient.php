@@ -1,19 +1,19 @@
 <?php
-namespace Overblog\RestClientBundle\Lib;
+namespace Overblog\WsClientBundle\Lib;
 
-use Overblog\RestClientBundle\Lib\RestQuery;
-use Overblog\RestClientBundle\Manager\RestMultiQueryManager;
-use Overblog\RestClientBundle\Exception\ConfigurationException;
-use Overblog\RestClientBundle\Exception\QueryException;
-use Overblog\RestClientBundle\Logging\RestLoggerInterface;
+use Overblog\WsClientBundle\Lib\WsQuery;
+use Overblog\WsClientBundle\Manager\WsMultiQueryManager;
+use Overblog\WsClientBundle\Exception\ConfigurationException;
+use Overblog\WsClientBundle\Exception\QueryException;
+use Overblog\WsClientBundle\Logging\WsLoggerInterface;
 
 /**
- * REST request abastraction Layer
+ * WS request abastraction Layer
  *
  * @author Xavier HAUSHERR
  */
 
-class RestClient
+class WsClient
 {
     /**
      * Handler for curl call
@@ -47,16 +47,16 @@ class RestClient
 
     /**
      * Logger instance
-     * @var Overblog\RestClientBundle\Logging\RestClientLogger
+     * @var Overblog\WsClientBundle\Logging\WsClientLogger
      */
     protected $logger;
 
     /**
      * Constructor - Save dependecies
      * @param array $urls
-     * @param RestLoggerInterface $logger
+     * @param WsLoggerInterface $logger
      */
-    public function __construct(Array $urls, RestLoggerInterface $logger = null)
+    public function __construct(Array $urls, WsLoggerInterface $logger = null)
     {
         $this->urls = $urls;
         $this->logger = $logger;
@@ -66,7 +66,7 @@ class RestClient
      * Get connection and save it into object
      *
      * @param string $name
-     * @return RestClient
+     * @return WsClient
      */
     public function getConnection($name)
     {
@@ -171,16 +171,16 @@ class RestClient
 
         $url = preg_replace('#([^:])//#', '$1/', $this->urls[$this->active_connection] . $uri);
 
-        return new RestQuery($method, $url, $param);
+        return new WsQuery($method, $url, $param);
     }
 
     /**
      * Execute single request
-     * @param RestQuery $query
+     * @param WsQuery $query
      * @param string $name
      * @return array
      */
-    protected function executeSingleRequest(RestQuery $query, $id)
+    protected function executeSingleRequest(WsQuery $query, $id)
     {
         $body = $this->execQuery($query, $id);
 
@@ -197,7 +197,7 @@ class RestClient
      */
     protected function executeMultiRequest()
     {
-        $manager = new RestMultiQueryManager();
+        $manager = new WsMultiQueryManager();
 
         // Add Handler
         foreach($this->handler as $handler)
@@ -237,12 +237,12 @@ class RestClient
 
     /**
      * Exec the query
-     * @param RestQuery $query
+     * @param WsQuery $query
      * @param string $id
      * @param boolean $isMulti
      * @return string
      */
-    protected function execQuery(RestQuery $query, $id, $isMulti = false)
+    protected function execQuery(WsQuery $query, $id, $isMulti = false)
     {
         $return = $query->exec();
 

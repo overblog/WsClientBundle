@@ -1,17 +1,17 @@
 parameters:
-  rest_client.class: Overblog\RestClientBundle\Lib\RestClient
-  urls: %rest_client.urls%
+  ws_client.class: Overblog\WsClientBundle\Lib\WsClient
+  urls: %ws_client.urls%
 
 services:
-  rest_client:
-    class: %rest_client.class%
-    arguments: [%urls%, @rest_client.logger]
+  ws_client:
+    class: %ws_client.class%
+    arguments: [%urls%, @ws_client.logger]
 
-  rest_client.logger:
-    class: Overblog\RestClientBundle\Logging\RestClientLogger
+  ws_client.logger:
+    class: Overblog\WsClientBundle\Logging\WsClientLogger
 
-  data_collector.rest_client:
-    class: Overblog\RestClientBundle\DataCollector\RestClientDataCollector
-    arguments: [@rest_client.logger]
+  data_collector.ws_client:
+    class: Overblog\WsClientBundle\DataCollector\WsClientDataCollector
+    arguments: [@ws_client.logger]
     tags:
-        - { name: data_collector, template: "OverblogRestClientBundle:Collector:rest", id: "rest_client" }
+        - { name: data_collector, template: "OverblogWsClientBundle:Collector:rest", id: "ws_client" }

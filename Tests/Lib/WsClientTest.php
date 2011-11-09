@@ -4,33 +4,33 @@
  *
  * @author Xavier HAUSHERR
  */
-namespace Overblog\RestClientBundle\Test\Lib;
+namespace Overblog\WsClientBundle\Test\Lib;
 
-use Overblog\RestClientBundle\Lib\RestClient;
-use Overblog\RestClientBundle\Lib\RestQuery;
-use Overblog\RestClientBundle\Logging\RestClientLogger;
+use Overblog\WsClientBundle\Lib\WsClient;
+use Overblog\WsClientBundle\Lib\WsQuery;
+use Overblog\WsClientBundle\Logging\WsClientLogger;
 use Symfony\Bridge\Monolog\Logger;
 
-class RestClientTest extends \PHPUnit_Framework_TestCase
+class WsClientTest extends \PHPUnit_Framework_TestCase
 {
     /**
      *
-     * @var RestClient
+     * @var WsClient
      */
     protected $client;
 
     protected function setUp()
     {
-        $this->client = new RestClient(array(
+        $this->client = new WsClient(array(
             'tumblr' => 'http://api.tumblr.com/v2/'
-        ), new RestClientLogger());
+        ), new WsClientLogger());
     }
 
     public function testGetConnection()
     {
-        $this->assertInstanceOf('Overblog\RestClientBundle\Lib\RestClient', $this->client->getConnection('tumblr'));
+        $this->assertInstanceOf('Overblog\WsClientBundle\Lib\WsClient', $this->client->getConnection('tumblr'));
 
-        $this->setExpectedException('Overblog\RestClientBundle\Exception\ConfigurationException',
+        $this->setExpectedException('Overblog\WsClientBundle\Exception\ConfigurationException',
 			'Unable to find configuration "NexistePas"'
 		);
 
@@ -39,7 +39,7 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
 
     public function testGetError()
     {
-        $this->setExpectedException('Overblog\RestClientBundle\Exception\ConfigurationException',
+        $this->setExpectedException('Overblog\WsClientBundle\Exception\ConfigurationException',
 			'No connection set.'
 		);
 
@@ -96,22 +96,22 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
 
     public function testCurlError()
     {
-        $this->setExpectedException('Overblog\RestClientBundle\Exception\QueryException',
+        $this->setExpectedException('Overblog\WsClientBundle\Exception\QueryException',
 			"Couldn't resolve host 'xxx'"
 		);
 
-        $client = new RestClient(array('tumblr' => 'http://xxx/'));
+        $client = new WsClient(array('tumblr' => 'http://xxx/'));
 
         $response = $client->getConnection('tumblr')->get('/blog/david.tumblr.com/avatar/64')->exec();
     }
 
     public function testMultiCurlError()
     {
-        $this->setExpectedException('Overblog\RestClientBundle\Exception\QueryException',
+        $this->setExpectedException('Overblog\WsClientBundle\Exception\QueryException',
 			"Couldn't resolve host 'xxx'"
 		);
 
-        $client = new RestClient(array('tumblr' => 'http://xxx/'));
+        $client = new WsClient(array('tumblr' => 'http://xxx/'));
 
         $response = $client->getConnection('tumblr')
                 ->get('/blog/david.tumblr.com/avatar/64')
@@ -120,19 +120,19 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
 
     public function testException()
     {
-        $e = new \Overblog\RestClientBundle\Exception\QueryException('TEST');
+        $e = new \Overblog\WsClientBundle\Exception\QueryException('TEST');
         $this->assertEquals('TEST', $e);
 
-        $e = new \Overblog\RestClientBundle\Exception\ConfigurationException('TEST');
+        $e = new \Overblog\WsClientBundle\Exception\ConfigurationException('TEST');
         $this->assertEquals('TEST', $e);
     }
 
     public function testUnknowMethod()
     {
-        $this->setExpectedException('Overblog\RestClientBundle\Exception\ConfigurationException',
+        $this->setExpectedException('Overblog\WsClientBundle\Exception\ConfigurationException',
 			"Unknow method"
 		);
 
-        $ch = new RestQuery('XXX', 'http://');
+        $ch = new WsQuery('XXX', 'http://');
     }
 }

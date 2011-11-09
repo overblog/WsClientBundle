@@ -1,5 +1,5 @@
 <?php
-namespace Overblog\RestClientBundle\Exception;
+namespace Overblog\WsClientBundle\Exception;
 
 class ConfigurationException extends \Exception {
 

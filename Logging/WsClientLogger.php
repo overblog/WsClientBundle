@@ -1,8 +1,8 @@
 <?php
 
-namespace Overblog\RestClientBundle\Logging;
+namespace Overblog\WsClientBundle\Logging;
 
-class RestClientLogger implements RestLoggerInterface
+class WsClientLogger implements WsLoggerInterface
 {
     /** @var array $queries Executed REST queries. */
     public $queries = array();

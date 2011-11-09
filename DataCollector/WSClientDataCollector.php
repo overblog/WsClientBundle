@@ -1,24 +1,24 @@
 <?php
 
-namespace Overblog\RestClientBundle\DataCollector;
+namespace Overblog\WsClientBundle\DataCollector;
 
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Overblog\RestClientBundle\Logging\RestClientLogger;
+use Overblog\WsClientBundle\Logging\WSClientLogger;
 
 
 /**
- * REST Collector
+ * WS Collector
  *
  * @author Xavier HAUSHERR
  */
 
-class RestClientDataCollector extends DataCollector
+class WsClientDataCollector extends DataCollector
 {
     protected $logger;
 
-    public function __construct(RestClientLogger $logger = null)
+    public function __construct(WsClientLogger $logger = null)
     {
         $this->logger      = $logger;
     }

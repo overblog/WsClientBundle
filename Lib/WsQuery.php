@@ -1,8 +1,8 @@
 <?php
 
-namespace Overblog\RestClientBundle\Lib;
+namespace Overblog\WsClientBundle\Lib;
 
-use Overblog\RestClientBundle\Exception\ConfigurationException;
+use Overblog\WsClientBundle\Exception\ConfigurationException;
 
 /**
  * cURL query Object
@@ -10,7 +10,7 @@ use Overblog\RestClientBundle\Exception\ConfigurationException;
  * @author Xavier HAUSHERR
  */
 
-class RestQuery
+class WsQuery
 {
     /**
      * Timeout for Web Service call

@@ -1,15 +1,15 @@
 <?php
-namespace Overblog\RestClientBundle\Logging;
+namespace Overblog\WsClientBundle\Logging;
 
 /**
  * RestLogger - Interface to log Rest queries
  * @author Xavier HAUSHERR
  */
 
-interface RestLoggerInterface
+interface WsLoggerInterface
 {
     /**
-     * Log Rest Queries
+     * Log Ws Queries
      * @param string $queryId
      * @param string $method
      * @param array $params

@@ -1,15 +1,15 @@
 <?php
-namespace Overblog\RestClientBundle\Manager;
+namespace Overblog\WsClientBundle\Manager;
 
-use Overblog\RestClientBundle\Lib\RestQuery;
+use Overblog\WsClientBundle\Lib\WsQuery;
 
 /**
- * REST request multi query manager
+ * WS request multi query manager
  *
  * @author Xavier HAUSHERR
  */
 
-class RestMultiQueryManager
+class WsMultiQueryManager
 {
     protected $manager;
     protected $active;
@@ -24,9 +24,9 @@ class RestMultiQueryManager
 
     /**
      * Add a query to manager
-     * @param RestQuery $query
+     * @param WsQuery $query
      */
-    public function addQuery(RestQuery $query)
+    public function addQuery(WsQuery $query)
     {
         $query->setMulti();
 
@@ -35,9 +35,9 @@ class RestMultiQueryManager
 
     /**
      * Remove a query from manager
-     * @param RestQuery $query
+     * @param WsQuery $query
      */
-    public function removeQuery(RestQuery $query)
+    public function removeQuery(WsQuery $query)
     {
         $query->setSingle();
 

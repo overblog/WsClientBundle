@@ -13,7 +13,7 @@
         <server name="SYMFONY" value="./Fixtures/symfony/src" />
     </php>
     <testsuites>
-        <testsuite name="RestClientBundle Test Suite">
+        <testsuite name="WsClientBundle Test Suite">
             <directory suffix="Test.php">./Tests</directory>
         </testsuite>
     </testsuites>
