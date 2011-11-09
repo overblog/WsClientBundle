@@ -1,7 +1,7 @@
 <?php
 namespace Overblog\WsClientBundle\Manager;
 
-use Overblog\WsClientBundle\Query\WsQuery;
+use Overblog\WsClientBundle\Query\WsQueryBase;
 
 /**
  * WS request multi query manager
@@ -24,9 +24,9 @@ class WsMultiQueryManager
 
     /**
      * Add a query to manager
-     * @param WsQuery $query
+     * @param WsQueryBase $query
      */
-    public function addQuery(WsQuery $query)
+    public function addQuery(WsQueryBase $query)
     {
         $query->setMulti();
 
@@ -35,9 +35,9 @@ class WsMultiQueryManager
 
     /**
      * Remove a query from manager
-     * @param WsQuery $query
+     * @param WsQueryBase $query
      */
-    public function removeQuery(WsQuery $query)
+    public function removeQuery(WsQueryBase $query)
     {
         $query->setSingle();
 

@@ -10,7 +10,7 @@ use Overblog\WsClientBundle\Exception\ConfigurationException;
  * @author Xavier HAUSHERR
  */
 
-class WsQuery
+abstract class WsQueryBase
 {
     /**
      * Timeout for Web Service call
@@ -81,15 +81,19 @@ class WsQuery
     /**
      * Set var and init cURL instance
      *
-     * @param type $method
-     * @param type $url
+     * @param string $method
+     * @param string $host
+     * @param string $url
+     * @param int $type
      * @param array $param
      * @return resource
      */
-    public function __construct($method, $url, Array $param = array())
+    public function __construct($method, $host, $url, $id = null, Array $param = array())
     {
         $this->setMethod($method);
+        $this->host = $host;
         $this->url = $url;
+        $this->id = $id;
         $this->param = $param;
 
         return $this->init();
@@ -118,28 +122,7 @@ class WsQuery
      * Init cURL instance
      * @return resource
      */
-    protected function init()
-    {
-        $this->handle = curl_init();
-
-        // Options
-        curl_setopt($this->handle, CURLOPT_URL, $this->url);
-        curl_setopt($this->handle, CURLOPT_POSTFIELDS, $this->param);
-        curl_setopt($this->handle, CURLOPT_CONNECTTIMEOUT_MS, self::TIMEOUT);
-        curl_setopt($this->handle, CURLOPT_HEADER, true);
-        curl_setopt($this->handle, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($this->handle, CURLOPT_USERAGENT, 'OverBlog Ws Client');
-
-        if (self::DELETE === $this->method)
-        {
-            curl_setopt($this->handle, CURLOPT_CUSTOMREQUEST, $this->method);
-        } else
-        {
-            curl_setopt($this->handle, $this->method, true);
-        }
-
-        return $this->handle;
-    }
+    abstract protected function init();
 
     /**
      * Return cURL resource
@@ -226,4 +209,12 @@ class WsQuery
     {
         return curl_close($this->handle);
     }
+
+    /**
+     * Decode body response
+     *
+     * @param type $body
+     * @return mixed
+     */
+    abstract public function decodeBody($body);
 }

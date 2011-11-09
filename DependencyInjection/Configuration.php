@@ -25,7 +25,12 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('urls')
                     ->requiresAtLeastOneElement()
                     ->useAttributeAsKey('name')
-                    ->prototype('scalar')->end()
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('url')->isRequired()->end()
+                            ->scalarNode('type')->defaultValue('json')->end()
+                        ->end()
+                    ->end()
                 ->end()
             ->end();
 

@@ -14,4 +14,4 @@ services:
     class: Overblog\WsClientBundle\DataCollector\WsClientDataCollector
     arguments: [@ws_client.logger]
     tags:
-        - { name: data_collector, template: "OverblogWsClientBundle:Collector:rest", id: "ws_client" }
+        - { name: data_collector, template: "OverblogWsClientBundle:Collector:ws", id: "ws_client" }

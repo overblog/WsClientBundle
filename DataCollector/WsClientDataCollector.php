@@ -32,7 +32,7 @@ class WsClientDataCollector extends DataCollector
 
     public function getName()
     {
-        return 'rest_client';
+        return 'ws_client';
     }
 
     public function getQueryCount()
