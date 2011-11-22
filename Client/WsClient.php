@@ -169,17 +169,25 @@ class WsClient
      */
     public function exec()
     {
+		var_dump($this->count);
+
         // Only one request
         if(2 === $this->count)
         {
             $query = current($this->handler);
 
-            return $this->executeSingleRequest($query[0]['object'], $query[0]['id']);
+            $return = $this->executeSingleRequest($query[0]['object'], $query[0]['id']);
         }
         else
         {
-            return $this->executeMultiRequest();
+            $return = $this->executeMultiRequest();
         }
+
+		//RESET
+		$this->handler = array();
+		$this->count = 1;
+
+		return $return;
     }
 
     /**
