@@ -169,8 +169,6 @@ class WsClient
      */
     public function exec()
     {
-		var_dump($this->count);
-
         // Only one request
         if(2 === $this->count)
         {
