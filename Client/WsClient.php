@@ -181,11 +181,18 @@ class WsClient
             $return = $this->executeMultiRequest();
         }
 
-		//RESET
-		$this->handler = array();
-		$this->count = 1;
+		$this->resetHandler();
 
 		return $return;
+    }
+
+    /**
+     * Reset handler
+     */
+    protected function resetHandler()
+    {
+		$this->handler = array();
+		$this->count = 1;
     }
 
     /**
