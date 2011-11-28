@@ -28,6 +28,8 @@
 			quiet="true" >
 			<fileset dir="${ws}">
 				<include name="**/*.php" />
+				<exclude name="build/*" />
+                                <exclude name="Tests/*" />
 			</fileset>
 		</phpdoc>
 	</target>
