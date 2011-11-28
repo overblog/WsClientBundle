@@ -30,6 +30,7 @@
 				<include name="**/*.php" />
 				<exclude name="build/*" />
                                 <exclude name="Tests/*" />
+				<exclude name="Fixtures/*" />
 			</fileset>
 		</phpdoc>
 	</target>
