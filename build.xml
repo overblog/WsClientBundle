@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="OverblogWsClientBundle" basedir="." default="prepare">
+	<property name="builddir" value="${ws}/build" />
+	
+	<target name="clean">
+		<echo msg="Clean..." />
+    	<delete dir="${builddir}" />
+	</target>
+	
+	<target name="prepare">
+		<echo msg="Prepare..." />
+		<mkdir dir="${builddir}" />
+		<mkdir dir="${builddir}/logs" />
+		<mkdir dir="${builddir}/logs/coverage" />
+		<mkdir dir="${builddir}/docs" />
+		<exec command="git submodule update --init"
+			dir="${ws}" />
+	</target>
+	
+	<!-- PHP API Documentation -->
+	<target name="phpdoc">
+		<echo msg="PHP Documentor..." />
+		<phpdoc title="API Documentation"
+			destdir="${builddir}/docs"
+			sourcecode="yes"
+			defaultpackagename="OverblogWsClientBundle"
+			output="HTML:Smarty:PHP"
+			quiet="true" >
+			<fileset dir="${ws}">
+				<include name="**/*.php" />
+			</fileset>
+		</phpdoc>
+	</target>
+	
+	<!-- PHP copy/paste analysis -->
+	<target name="phpcpd">
+		<echo msg="PHP Copy/Paste..." />
+		<exec command="phpcpd --log-pmd=${builddir}/logs/pmd.xml ${ws}" escape="false" />
+	</target>
+	
+	<!-- PHP dependency checker -->
+	<target name="pdepend">
+		<echo msg="PHP Depend..." />
+		<exec command="pdepend --jdepend-xml=${builddir}/logs/jdepend.xml ${ws}" escape="false" />
+	</target>
+	
+	<!-- PHP CodeSniffer -->
+	<target name="phpcs">
+		<echo msg="PHP CodeSniffer..." />
+		<exec command="phpcs --standard=Symfony2 --report=checkstyle ${ws} > ${builddir}/logs/checkstyle.xml" escape="false" />
+	</target>
+	
+	<!-- Unit Tests & coverage analysis -->
+	<target name="phpunit">
+		<echo msg="PHP Unit..." />
+		<exec command="phpunit -c . --log-junit ${builddir}/logs/phpunit.xml --coverage-clover ${builddir}/logs/coverage/clover.xml --coverage-html ${builddir}/logs/coverage/"
+			logoutput="TRUE" />
+	</target>
+</project>
