@@ -28,10 +28,10 @@
 			quiet="true" >
 			<fileset dir="${ws}">
 				<include name="**/*.php" />
-				<exclude name="build/*" />
-                                <exclude name="Tests/*" />
-				<exclude name="Fixtures/*" />
-			</fileset>
+				<exclude name="build/**" />
+				<exclude name="Tests/**" />
+				<exclude name="Fixtures/**" />
+			</fileset>		
 		</phpdoc>
 	</target>
 	
