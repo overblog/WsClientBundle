@@ -50,7 +50,7 @@
 	<!-- PHP CodeSniffer -->
 	<target name="phpcs">
 		<echo msg="PHP CodeSniffer..." />
-		<exec command="phpcs --standard=Symfony2 --report=checkstyle ${ws} > ${builddir}/logs/checkstyle.xml" escape="false" />
+		<exec command="phpcs --standard=Symfony2 --ignore=build,Tests,Fixtures --report=checkstyle --extensions=php ${ws} > ${builddir}/logs/checkstyle.xml" escape="false" />
 	</target>
 	
 	<!-- Unit Tests & coverage analysis -->
