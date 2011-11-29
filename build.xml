@@ -44,7 +44,7 @@
 	<!-- PHP dependency checker -->
 	<target name="pdepend">
 		<echo msg="PHP Depend..." />
-		<exec command="pdepend --jdepend-xml=${builddir}/logs/jdepend.xml ${ws}" escape="false" />
+		<exec command="pdepend --jdepend-xml=${builddir}/logs/jdepend.xml --ignore=build,Tests,Fixtures ${ws}" escape="false" />
 	</target>
 	
 	<!-- PHP CodeSniffer -->
