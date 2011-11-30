@@ -41,12 +41,6 @@ class WsClient
     protected $last_stats = array();
 
     /**
-     * Last call headers
-     * @var array
-     */
-    protected $last_headers = array();
-
-    /**
      * Contain multi handler curl session
      * @var cURL
      */
@@ -310,28 +304,5 @@ class WsClient
     public function getLastStats($key)
     {
         return $this->last_stats[$key];
-    }
-
-    /**
-     * Set last REST call headers
-     *
-     * @param strin $key
-     * @param string $headers
-     */
-    protected function setLastHeaders($key, $headers)
-    {
-
-        $this->last_headers[$key] = explode("\r\n", $headers);
-    }
-
-    /**
-     * Return last REST call headers
-     *
-     * @param strin $key
-     * @return array
-     */
-    public function getLastHeaders($key)
-    {
-        return $this->last_headers[$key];
     }
 }

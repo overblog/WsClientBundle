@@ -60,7 +60,6 @@ class WsClientTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('tumblr_1', $response);
         $this->assertArrayHasKey('http_code', $this->client->getLastStats('tumblr_1'));
         $this->assertEquals('http://api.tumblr.com/v2/blog/david.tumblr.com/avatar/64', $this->client->getLastStat('tumblr_1', 'url'));
-        $this->assertEquals('Connection: close', end($this->client->getLastHeaders('tumblr_1')));
     }
 
     public function testPost()

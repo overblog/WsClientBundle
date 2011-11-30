@@ -28,6 +28,9 @@ class WsQueryJson extends WsQueryBase
         curl_setopt($this->handle, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($this->handle, CURLOPT_USERAGENT, 'OverBlog JSON-RPC Client');
         curl_setopt($this->handle, CURLOPT_POST, true); //Only POST
+        curl_setopt($this->handle, CURLOPT_HTTPHEADER, array(
+            'Content-type: application/jsonrequest'
+        ));
 
         curl_setopt($this->handle, CURLOPT_POSTFIELDS, json_encode(array(
             'id' => $this->id,
