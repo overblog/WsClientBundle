@@ -270,9 +270,6 @@ class WsClient
             throw new QueryException('Curl Error : ' . $query->getError());
         }
 
-        list($headers, $body) = explode("\r\n\r\n", $return, 2);
-
-        $this->setLastHeaders($id, $headers);
         $this->setLastStats($id, $query->getInfo());
 
         if($this->logger)
@@ -280,7 +277,7 @@ class WsClient
             $this->logger->logQuery($id, $query->getMethod() . ($isMulti ? ' (Multi)' : ''), $query->getParam(), $this->getLastStats($id));
         }
 
-        return $query->decodeBody($body);
+        return $query->decodeBody($return);
     }
 
     /**
