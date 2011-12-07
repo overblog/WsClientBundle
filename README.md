@@ -13,6 +13,7 @@ Juste add the following lines is your deps file:
     [OverblogWsClientBundle]
         git=git@github.com:ebuzzing/OverblogWsClientBundle.git
         target=/bundles/Overblog/WsClientBundle
+        version=v0.1
 
 You have now to tell Symfony2 autoloader where to find the API and the files that will be generated. Fire up your text editor and add the following lines to the *app/autoload.php* file:
 
