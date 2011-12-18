@@ -17,6 +17,12 @@ use Overblog\WsClientBundle\Logging\WsLoggerInterface;
 class WsClient
 {
     /**
+     * Urls lists
+     * @var array
+     */
+    protected $urls = array();
+
+    /**
      * Handler for curl call
      * @var array
      */
