@@ -19,7 +19,7 @@ You have now to tell Symfony2 autoloader where to find the API and the files tha
 
     #app/autoload.php
 
-        'Overblog'         => __DIR__.'/../vendor/overblog/src',
+        'Overblog'         => __DIR__.'/../vendor/bundles',
 
 Let's register the WsClientBundle in the application kernel:
 
