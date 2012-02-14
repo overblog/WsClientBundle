@@ -17,6 +17,12 @@ use Overblog\WsClientBundle\Logging\WsLoggerInterface;
 class WsClient
 {
     /**
+     * Urls lists
+     * @var array
+     */
+    protected $urls = array();
+
+    /**
      * Handler for curl call
      * @var array
      */
@@ -71,7 +77,7 @@ class WsClient
      */
     public function getConnection($name)
     {
-        if(!isset($this->urls[$name]))
+        if (!isset($this->urls[$name]))
         {
             throw new ConfigurationException('Unable to find configuration "' . $name . '"');
         }
@@ -137,6 +143,7 @@ class WsClient
      * @param string $method
      * @param string $uri
      * @param array $param
+     * @param array $headers
      * @return WsQueryBase
      */
     protected function createRequest($method, $uri, Array $param = array(), Array $headers = array())
@@ -174,7 +181,7 @@ class WsClient
     public function exec()
     {
         // Only one request
-        if(2 === $this->count)
+        if (2 === $this->count)
         {
             $query = current($this->handler);
 
@@ -185,9 +192,9 @@ class WsClient
             $return = $this->executeMultiRequest();
         }
 
-		$this->resetHandler();
+        $this->resetHandler();
 
-		return $return;
+        return $return;
     }
 
     /**
@@ -195,8 +202,8 @@ class WsClient
      */
     protected function resetHandler()
     {
-		$this->handler = array();
-		$this->count = 1;
+        $this->handler = array();
+        $this->count = 1;
     }
 
     /**
@@ -225,9 +232,9 @@ class WsClient
         $manager = new WsMultiQueryManager();
 
         // Add Handler
-        foreach($this->handler as $handler)
+        foreach ($this->handler as $handler)
         {
-            foreach($handler as $query)
+            foreach ($handler as $query)
             {
                 $manager->addQuery($query['object']);
             }
@@ -243,9 +250,9 @@ class WsClient
         // Get Results
         $bodies = array();
 
-        foreach($this->handler as $name => $handler)
+        foreach ($this->handler as $name => $handler)
         {
-            foreach($handler as $key => $query)
+            foreach ($handler as $key => $query)
             {
                 $bodies[$query['id']] = $this->execQuery($query['object'], $query['id'], true);
 
@@ -269,16 +276,18 @@ class WsClient
     {
         $return = $query->exec();
 
-        if(null === $return || false === $return)
+        if (null === $return || false === $return)
         {
             throw new QueryException('Curl Error : ' . $query->getError());
         }
 
         $this->setLastStats($id, $query->getInfo());
 
-        if($this->logger)
+        if ($this->logger)
         {
-            $this->logger->logQuery($id, $query->getMethod() . ($isMulti ? ' (Multi)' : ''), $query->getParam(), $this->getLastStats($id));
+            $this->logger->logQuery($id, $query->getMethod() . ($isMulti
+                    ? ' (Multi)'
+                    : ''), $query->getParam(), $this->getLastStats($id));
         }
 
         return $query->decodeBody($return);

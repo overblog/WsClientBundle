@@ -161,7 +161,14 @@ abstract class WsQueryBase
      */
     public function getError()
     {
-        return curl_error($this->handle);
+        $error = curl_error($this->handle);
+
+        if(!is_null($this->url))
+        {
+            $error.= sprintf(' (url: %s)', $this->url);
+        }
+
+        return $error;
     }
 
     /**
