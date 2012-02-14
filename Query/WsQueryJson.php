@@ -14,6 +14,14 @@ use Overblog\WsClientBundle\Exception\ConfigurationException;
 class WsQueryJson extends WsQueryBase
 {
     /**
+     * Request Headers
+     * @var Array
+     */
+    protected $headers = array(
+        'Content-type' => 'application/jsonrequest'
+    );
+
+    /**
      * Init cURL instance
      * @return resource
      */
@@ -28,9 +36,7 @@ class WsQueryJson extends WsQueryBase
         curl_setopt($this->handle, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($this->handle, CURLOPT_USERAGENT, 'OverBlog JSON-RPC Client');
         curl_setopt($this->handle, CURLOPT_POST, true); //Only POST
-        curl_setopt($this->handle, CURLOPT_HTTPHEADER, array(
-            'Content-type: application/jsonrequest'
-        ));
+        curl_setopt($this->handle, CURLOPT_HTTPHEADER, $this->getHeaders());
 
         curl_setopt($this->handle, CURLOPT_POSTFIELDS, json_encode(array(
             'id' => $this->id,

@@ -87,44 +87,48 @@ class WsClient
      * Get Request
      * @param string $uri
      * @param array $param
+     * @param array $headers
      * @return array
      */
-	public function get($uri, Array $param = array())
+	public function get($uri, Array $param = array(), $headers = array())
 	{
-        return $this->createRequest('GET', $uri, $param);;
+        return $this->createRequest('GET', $uri, $param, $headers);
 	}
 
     /**
      * Post Request
      * @param string $uri
      * @param array $param
+     * @param array $headers
      * @return array
      */
-	public function post($uri, Array $param = array())
+	public function post($uri, Array $param = array(), $headers = array())
 	{
-       return $this->createRequest('POST', $uri, $param);
+       return $this->createRequest('POST', $uri, $param, $headers);
 	}
 
     /**
      * Put Request
      * @param string $uri
      * @param array $param
+     * @param array $headers
      * @return array
      */
-	public function put($uri, Array $param = array())
+	public function put($uri, Array $param = array(), $headers = array())
 	{
-        return $this->createRequest('PUT', $uri, $param);
+        return $this->createRequest('PUT', $uri, $param, $headers);
 	}
 
     /**
      * Delete Request
      * @param string $uri
      * @param array $param
+     * @param array $headers
      * @return array
      */
-	public function delete($uri, Array $param = array())
+	public function delete($uri, Array $param = array(), $headers = array())
 	{
-        return $this->createRequest('DELETE', $uri, $param);
+        return $this->createRequest('DELETE', $uri, $param, $headers);
 	}
 
     /**
@@ -135,7 +139,7 @@ class WsClient
      * @param array $param
      * @return WsQueryBase
      */
-    protected function createRequest($method, $uri, Array $param = array())
+    protected function createRequest($method, $uri, Array $param = array(), Array $headers = array())
     {
         if (is_null($this->active_connection))
         {
@@ -144,11 +148,17 @@ class WsClient
 
         $class = 'Overblog\\WsClientBundle\\Query\\WsQuery' . ucfirst(strtolower($this->urls[$this->active_connection]['type']));
 
-        //Generate od for request
+        // Generate id for request
         $id = $this->active_connection . '_' . $this->count;
 
+        // Instanciate connection
+        $object = new $class($method, $this->urls[$this->active_connection]['url'], $uri, $id, $param);
+
+        // Set headers (don't overwrite)
+        $object->setHeaders($headers, false);
+
         $this->handler[$this->active_connection][] = array(
-            'object' => new $class($method, $this->urls[$this->active_connection]['url'], $uri, $id, $param),
+            'object' => $object,
             'id' => $id
         );
 

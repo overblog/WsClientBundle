@@ -73,6 +73,12 @@ abstract class WsQueryBase
     protected $param = array();
 
     /**
+     * Request Headers
+     * @var Array
+     */
+    protected $headers = array();
+
+    /**
      * Is the query is part of a multi-query
      * @var boolean
      */
@@ -208,6 +214,41 @@ abstract class WsQueryBase
     public function close()
     {
         return curl_close($this->handle);
+    }
+
+    /**
+     * Return headers
+     * @return array
+     */
+    public function getHeaders()
+    {
+        $headers = array();
+
+        foreach($this->headers as $key => $header)
+        {
+            $headers[] = $key . ': ' . $header;
+        }
+
+        return $headers;
+    }
+
+    /**
+     * Set headers array(Content-type' => 'application/jsonrequest');
+     * @param array $headers
+     * @param boolean $overwrite
+     */
+    public function setHeaders($headers, $overwrite = false)
+    {
+        if(!$overwrite)
+        {
+            $this->headers = array_merge($this->headers, $headers);
+        }
+        else
+        {
+            $this->headers = $headers;
+        }
+
+        curl_setopt($this->handle, CURLOPT_HTTPHEADER, $this->getHeaders());
     }
 
     /**
