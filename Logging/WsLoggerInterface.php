@@ -12,8 +12,8 @@ interface WsLoggerInterface
      * Log Ws Queries
      * @param string $queryId
      * @param string $method
-     * @param array $params
+     * @param mixed $params
      * @param array $stats
      */
-    public function logQuery($queryId, $method, Array $params, Array $stats);
+    public function logQuery($queryId, $method, $params, Array $stats);
 }

@@ -91,10 +91,10 @@ abstract class WsQueryBase
      * @param string $host
      * @param string $url
      * @param int $type
-     * @param array $param
+     * @param mixed $param
      * @return resource
      */
-    public function __construct($method, $host, $url, $id = null, Array $param = array())
+    public function __construct($method, $host, $url, $id = null, $param = null)
     {
         $this->setMethod($method);
         $this->host = $host;

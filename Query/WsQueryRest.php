@@ -25,11 +25,15 @@ class WsQueryRest extends WsQueryBase
 
         // Options
         curl_setopt($this->handle, CURLOPT_URL, $url);
-        curl_setopt($this->handle, CURLOPT_POSTFIELDS, $this->param);
         curl_setopt($this->handle, CURLOPT_CONNECTTIMEOUT_MS, self::TIMEOUT);
         curl_setopt($this->handle, CURLOPT_HEADER, true);
         curl_setopt($this->handle, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($this->handle, CURLOPT_USERAGENT, 'OverBlog Rest Client');
+
+        if(!is_null($this->param))
+        {
+            curl_setopt($this->handle, CURLOPT_POSTFIELDS, $this->param);
+        }
 
         if (self::DELETE === $this->method)
         {

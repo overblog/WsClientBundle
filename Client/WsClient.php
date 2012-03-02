@@ -96,7 +96,7 @@ class WsClient
      * @param array $headers
      * @return array
      */
-	public function get($uri, Array $param = array(), $headers = array())
+	public function get($uri, Array $param = null, $headers = array())
 	{
         return $this->createRequest('GET', $uri, $param, $headers);
 	}
@@ -108,7 +108,7 @@ class WsClient
      * @param array $headers
      * @return array
      */
-	public function post($uri, Array $param = array(), $headers = array())
+	public function post($uri, $param = null, $headers = array())
 	{
        return $this->createRequest('POST', $uri, $param, $headers);
 	}
@@ -120,7 +120,7 @@ class WsClient
      * @param array $headers
      * @return array
      */
-	public function put($uri, Array $param = array(), $headers = array())
+	public function put($uri, Array $param = null, $headers = array())
 	{
         return $this->createRequest('PUT', $uri, $param, $headers);
 	}
@@ -132,7 +132,7 @@ class WsClient
      * @param array $headers
      * @return array
      */
-	public function delete($uri, Array $param = array(), $headers = array())
+	public function delete($uri, Array $param = null, $headers = array())
 	{
         return $this->createRequest('DELETE', $uri, $param, $headers);
 	}
@@ -146,7 +146,7 @@ class WsClient
      * @param array $headers
      * @return WsQueryBase
      */
-    protected function createRequest($method, $uri, Array $param = array(), Array $headers = array())
+    protected function createRequest($method, $uri, $param = null, Array $headers = array())
     {
         if (is_null($this->active_connection))
         {
