@@ -71,6 +71,23 @@ class WsClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('http://api.tumblr.com/v2/blog/david.tumblr.com/avatar/64', $this->client->getLastStat('tumblr_1', 'url'));
     }
 
+    public function testPostWithParam()
+    {
+        // String
+        $response = $this->client->getConnection('tumblr')->post('/blog/david.tumblr.com/avatar/64', 'TEST')->exec();
+
+        $this->assertArrayHasKey('tumblr_1', $response);
+        $this->assertArrayHasKey('http_code', $this->client->getLastStats('tumblr_1'));
+        $this->assertEquals('http://api.tumblr.com/v2/blog/david.tumblr.com/avatar/64', $this->client->getLastStat('tumblr_1', 'url'));
+
+        // Array
+        $response = $this->client->getConnection('tumblr')->post('/blog/david.tumblr.com/avatar/64', array('value' => 'valeur'))->exec();
+
+        $this->assertArrayHasKey('tumblr_1', $response);
+        $this->assertArrayHasKey('http_code', $this->client->getLastStats('tumblr_1'));
+        $this->assertEquals('http://api.tumblr.com/v2/blog/david.tumblr.com/avatar/64', $this->client->getLastStat('tumblr_1', 'url'));
+    }
+
     public function testPostJson()
     {
         $response = $this->client->getConnection('tumblr2')->post('/blog/david.tumblr.com/avatar/64')->exec();
