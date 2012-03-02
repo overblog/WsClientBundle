@@ -68,9 +68,9 @@ abstract class WsQueryBase
 
     /**
      * Request Param
-     * @var Array
+     * @var mixed
      */
-    protected $param = array();
+    protected $param;
 
     /**
      * Request Headers
