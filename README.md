@@ -13,7 +13,7 @@ Juste add the following lines is your deps file:
     [OverblogWsClientBundle]
         git=git@github.com:ebuzzing/OverblogWsClientBundle.git
         target=/bundles/Overblog/WsClientBundle
-        version=v0.2
+        version=v0.4
 
 You have now to tell Symfony2 autoloader where to find the API and the files that will be generated. Fire up your text editor and add the following lines to the *app/autoload.php* file:
 
@@ -35,6 +35,7 @@ You can now define your service settings in your main configuration file. The ex
             *cnct_name*:
               url: http://api.domain.tld/
               type: rest
+              timeout: 2000
             *cnct_name_2*:
               url: http://api.domain.tld/json-rpc/user
               type: json
