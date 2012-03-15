@@ -24,7 +24,8 @@ class WsClientTest extends \PHPUnit_Framework_TestCase
         $this->client = new WsClient(array(
             'tumblr' => array(
                 'url' => 'http://api.tumblr.com/v2/',
-                'type' => 'rest'
+                'type' => 'rest',
+                'timeout' => 2000
             ),
             'tumblr2' => array(
                 'url' => 'http://api.tumblr.com/v2/',

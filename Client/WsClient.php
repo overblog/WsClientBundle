@@ -159,7 +159,15 @@ class WsClient
         $id = $this->active_connection . '_' . $this->count;
 
         // Instanciate connection
-        $object = new $class($method, $this->urls[$this->active_connection]['url'], $uri, $id, $param);
+        $object = new $class(
+            $method,
+            $this->urls[$this->active_connection]['url'],
+            $uri,
+            $id,
+            $param,
+            ((isset($this->urls[$this->active_connection]['timeout'])) ?
+                $this->urls[$this->active_connection]['timeout'] : null)
+        );
 
         // Set headers (don't overwrite)
         $object->setHeaders($headers, false);

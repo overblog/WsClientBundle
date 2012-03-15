@@ -13,12 +13,6 @@ use Overblog\WsClientBundle\Exception\ConfigurationException;
 abstract class WsQueryBase
 {
     /**
-     * Timeout for Web Service call
-     * @var int
-     */
-    const TIMEOUT = 1000;
-
-    /**
      * Get Method
      * @param string
      */
@@ -85,6 +79,12 @@ abstract class WsQueryBase
     protected $isMulti = false;
 
     /**
+     * Timeout for Web Service call
+     * @var int
+     */
+    protected $timeout = 1000;
+
+    /**
      * Set var and init cURL instance
      *
      * @param string $method
@@ -94,13 +94,14 @@ abstract class WsQueryBase
      * @param mixed $param
      * @return resource
      */
-    public function __construct($method, $host, $url, $id = null, $param = null)
+    public function __construct($method, $host, $url, $id = null, $param = null, $timeout = 1000)
     {
         $this->setMethod($method);
         $this->host = $host;
         $this->url = $url;
         $this->id = $id;
         $this->param = $param;
+        $this->timeout = $timeout;
 
         return $this->init();
     }

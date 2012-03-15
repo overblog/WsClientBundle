@@ -29,6 +29,7 @@ class Configuration implements ConfigurationInterface
                         ->children()
                             ->scalarNode('url')->isRequired()->end()
                             ->scalarNode('type')->defaultValue('json')->end()
+                            ->scalarNode('timeout')->defaultValue(1000)->end()
                         ->end()
                     ->end()
                 ->end()
