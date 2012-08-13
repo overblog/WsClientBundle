@@ -24,13 +24,19 @@ class WsQueryRest extends WsQueryBase
         $url = preg_replace('#([^:])//#', '$1/', $this->host . $this->url);
 
         // Options
+        if(!is_null($this->param) && self::GET === $this->method)
+        {
+            $url = $url . '?' . http_build_query($this->param);
+        }
+        
+        
         curl_setopt($this->handle, CURLOPT_URL, $url);
         curl_setopt($this->handle, CURLOPT_CONNECTTIMEOUT_MS, $this->timeout);
         curl_setopt($this->handle, CURLOPT_HEADER, false);
         curl_setopt($this->handle, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($this->handle, CURLOPT_USERAGENT, 'OverBlog Rest Client');
 
-        if(!is_null($this->param))
+        if(!is_null($this->param) && self::POST === $this->method)
         {
             curl_setopt($this->handle, CURLOPT_POSTFIELDS, $this->param);
         }
