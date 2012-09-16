@@ -16,5 +16,6 @@
     },
     "autoload": {
         "psr-0": {"Overblog": ""}
-    }
+    },
+    "minimum-stability": "dev"
 }
