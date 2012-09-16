@@ -1,0 +1,20 @@
+{
+    "name": "overblog/wsclient-bundle",
+    "description": "Web Service Client",
+    "homepage": "https://github.com/ebuzzing/OverblogWsClientBundle",
+    "type": "library",
+    "authors": [
+    {
+      "name": "Xavier HAUSHERR",
+      "email": "wavier.hausherr@wikiogroup.com",
+      "homepage": "http://www.over-blog.com"
+    }
+  ],
+    "require": {
+        "php": ">=5.3.0",
+        "ext-curl": "*"
+    },
+    "autoload": {
+        "psr-0": {"Overblog": ""}
+    }
+}
