@@ -6,7 +6,7 @@
     "authors": [
     {
       "name": "Xavier HAUSHERR",
-      "email": "wavier.hausherr@wikiogroup.com",
+      "email": "xavier.hausherr@wikiogroup.com",
       "homepage": "http://www.over-blog.com"
     }
   ],
@@ -14,8 +14,9 @@
         "php": ">=5.3.0",
         "ext-curl": "*"
     },
+    "target-dir": "Overblog/WsClientBundle",
     "autoload": {
-        "psr-0": {"Overblog": ""}
+        "psr-0": {"Overblog\\WsClientBundle": ""}
     },
     "minimum-stability": "dev"
 }
