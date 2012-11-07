@@ -9,7 +9,6 @@ namespace Overblog\WsClientBundle\Test\Client;
 use Overblog\WsClientBundle\Client\WsClient;
 use Overblog\WsClientBundle\Query\WsQueryRest;
 use Overblog\WsClientBundle\Logging\WsClientLogger;
-use Symfony\Bridge\Monolog\Logger;
 
 class WsClientTest extends \PHPUnit_Framework_TestCase
 {

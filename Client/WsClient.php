@@ -65,8 +65,31 @@ class WsClient
      */
     public function __construct(Array $urls, WsLoggerInterface $logger = null)
     {
-        $this->urls = $urls;
         $this->logger = $logger;
+
+        foreach($this->urls as $name => $config)
+        {
+            $this->createConnection($name, $config['url'], $config['type'], $config['timeout']);
+        }
+    }
+
+    /**
+     * Create a connection manually
+     * @param string $name
+     * @param string $url
+     * @param string $type
+     * @param int $timeout
+     * @return WsClient
+     */
+    public function createConnection($name, $url, $type = 'rest', $timeout = 1000)
+    {
+        $this->urls[$name] = array(
+            'url' => $url,
+            'type' => $type,
+            'timeout' => $timeout
+        );
+
+        return $this->getConnection($name);
     }
 
     /**
