@@ -67,7 +67,7 @@ class WsClient
     {
         $this->logger = $logger;
 
-        foreach($this->urls as $name => $config)
+        foreach($urls as $name => $config)
         {
             $this->createConnection($name, $config['url'], $config['type'], $config['timeout']);
         }
