@@ -69,9 +69,26 @@ class WsClient
 
         foreach($urls as $name => $config)
         {
-            $this->createConnection($name, $config['url'], $config['type'], $config['timeout']);
+            $this->setConnection($name, $config['url'], $config['type'], (isset($config['timeout']) ? $config['timeout'] : null));
         }
     }
+
+	/**
+     * Set connection
+     * @param string $name
+     * @param string $url
+     * @param string $type
+     * @param int $timeout
+     * @return WsClient
+     */
+	protected function setConnection($name, $url, $type = 'rest', $timeout = 1000)
+	{
+		$this->urls[$name] = array(
+            'url' => $url,
+            'type' => $type,
+            'timeout' => $timeout
+        );
+	}
 
     /**
      * Create a connection manually
@@ -83,12 +100,7 @@ class WsClient
      */
     public function createConnection($name, $url, $type = 'rest', $timeout = 1000)
     {
-        $this->urls[$name] = array(
-            'url' => $url,
-            'type' => $type,
-            'timeout' => $timeout
-        );
-
+        $this->setConnection($name, $url, $type, $timeout);
         return $this->getConnection($name);
     }
 
