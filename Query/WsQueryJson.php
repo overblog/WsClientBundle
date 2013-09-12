@@ -31,7 +31,7 @@ class WsQueryJson extends WsQueryBase
 
         // Options
         curl_setopt($this->handle, CURLOPT_URL, $this->host);
-        curl_setopt($this->handle, CURLOPT_CONNECTTIMEOUT_MS, $this->timeout);
+        curl_setopt($this->handle, CURLOPT_TIMEOUT_MS, $this->timeout);
         curl_setopt($this->handle, CURLOPT_HEADER, false);
         curl_setopt($this->handle, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($this->handle, CURLOPT_USERAGENT, 'OverBlog JSON-RPC Client');

@@ -28,10 +28,10 @@ class WsQueryRest extends WsQueryBase
         {
             $url = $url . '?' . http_build_query($this->param);
         }
-        
-        
+
+
         curl_setopt($this->handle, CURLOPT_URL, $url);
-        curl_setopt($this->handle, CURLOPT_CONNECTTIMEOUT_MS, $this->timeout);
+        curl_setopt($this->handle, CURLOPT_TIMEOUT_MS, $this->timeout);
         curl_setopt($this->handle, CURLOPT_HEADER, false);
         curl_setopt($this->handle, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($this->handle, CURLOPT_USERAGENT, 'OverBlog Rest Client');
