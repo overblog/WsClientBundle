@@ -1,7 +1,7 @@
 {
     "name": "overblog/wsclient-bundle",
     "description": "Web Service Client",
-    "homepage": "https://github.com/ebuzzing/OverblogWsClientBundle",
+    "homepage": "https://github.com/overblog/WsClientBundle",
     "type": "library",
     "authors": [
     {
