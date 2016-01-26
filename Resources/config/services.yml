@@ -5,13 +5,13 @@ parameters:
 services:
   ws_client:
     class: %ws_client.class%
-    arguments: [%urls%, @ws_client.logger]
+    arguments: [%urls%, "@ws_client.logger"]
 
   ws_client.logger:
     class: Overblog\WsClientBundle\Logging\WsClientLogger
 
   data_collector.ws_client:
     class: Overblog\WsClientBundle\DataCollector\WsClientDataCollector
-    arguments: [@ws_client.logger]
+    arguments: ["@ws_client.logger"]
     tags:
         - { name: data_collector, template: "OverblogWsClientBundle:Collector:ws", id: "ws_client" }
