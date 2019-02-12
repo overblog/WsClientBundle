@@ -1,11 +1,11 @@
 parameters:
   ws_client.class: Overblog\WsClientBundle\Client\WsClient
-  urls: %ws_client.urls%
+  urls: '%ws_client.urls%'
 
 services:
   ws_client:
-    class: %ws_client.class%
-    arguments: [%urls%, "@ws_client.logger"]
+    class: '%ws_client.class%'
+    arguments: ['%urls%', "@ws_client.logger"]
 
   ws_client.logger:
     class: Overblog\WsClientBundle\Logging\WsClientLogger
