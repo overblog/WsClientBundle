@@ -55,4 +55,9 @@ class WsClientDataCollector extends DataCollector
     {
         return $this->data['queries'];
     }
+    
+    public function reset()
+    {
+        $this->data = [];
+    }
 }
