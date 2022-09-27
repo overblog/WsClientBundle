@@ -6,6 +6,7 @@ use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Overblog\WsClientBundle\Logging\WsClientLogger;
+use Throwable;
 
 
 /**
