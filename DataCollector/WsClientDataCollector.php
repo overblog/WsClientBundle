@@ -23,7 +23,7 @@ class WsClientDataCollector extends DataCollector
         $this->logger      = $logger;
     }
 
-    public function collect(Request $request, Response $response, \Exception $exception = null)
+    public function collect(Request $request, Response $response, ?Throwable $exception = null)
     {
         $this->data = array(
             'queries' => null !== $this->logger ? $this->logger->queries : array(),
